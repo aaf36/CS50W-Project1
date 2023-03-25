@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>{{entry_title}}</title>
-    </head>
-    <body>
-        {{entry_content|safe}}
-    </body>
-</html>
+{% extends "encyclopedia/layout.html" %}
+{% block title %}        
+{{entry_title}}
+{% endblock %}
+{% block body %}
+{{entry_content|safe}}
+{% endblock %}
