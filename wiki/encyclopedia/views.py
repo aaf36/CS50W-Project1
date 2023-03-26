@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 import markdown2   # ignore
 
 
+
 from . import util
 
 
@@ -28,7 +29,9 @@ def entry_view(request, entry_title):
                     "entry_title":entry_title,
                     "entry_content":entry_content
                 })
-    return render(request, "encyclopedia/error404.html")
+    return render(request, "encyclopedia/error.html", {
+        "message": "no such entry exists"
+    })
    
     
 
@@ -50,9 +53,27 @@ def search(request):
                 })
             elif Squery.lower() in entry.lower():
                 matched_queries.append(entry)
-                return render(request, "encyclopedia/search_result.html", {
+        return render(request, "encyclopedia/search_result.html", {
                 "results":matched_queries
                 })
+            
+
+def newEntry_view(request):
+    if request.method == 'GET':
+        return render(request, "encyclopedia/newEntry.html")
+    else:
+        title= request.POST['title']
+        content= request.POST['content']
+        entries =util.list_entries()
+        for entry in entries:
+            if title.lower()==entry.lower():
+                return render(request, "encyclopedia/error.html",{
+                "message":"entry already exists"
+                })
+            else:
+                HtmlContent= convert_markdown_to_Html(content)
+                util.save_entry(title,HtmlContent)
+                return redirect("/")
                 
         
 
