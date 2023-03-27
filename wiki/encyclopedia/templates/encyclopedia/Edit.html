@@ -1,0 +1,18 @@
+{% extends "encyclopedia/layout.html" %}
+{% block title %}
+Create Entry
+{% endblock %}
+{% block body %}
+<form action="{% url 'wiki:save' %}" method="POST">
+{% csrf_token %}
+<label>Entry title:</label>
+<br>
+<input type="text" name="title" value="{{ prev_title }}">
+<br>
+<content>Content:</label>
+<br>
+<textarea name="content" style="width: 80%; height: 50vh;">{{ prev_content }}</textarea>
+<br>
+<input type="submit">
+</form>
+{% endblock %}

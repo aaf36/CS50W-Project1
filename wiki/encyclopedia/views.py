@@ -32,10 +32,8 @@ def entry_view(request, entry_title):
     return render(request, "encyclopedia/error.html", {
         "message": "no such entry exists"
     })
-   
-    
 
-         
+
 
 def search(request):
     matched_queries=[]
@@ -76,7 +74,25 @@ def newEntry_view(request):
                 return redirect("/")
                 
         
-
+def editEntry(request):
+    if request.method== "POST":
+        title =request.POST['title']
+        content= util.get_entry(title)
+        HtmlContent =convert_markdown_to_Html(content)
+        return render(request, "encyclopedia/Edit.html", {
+            "prev_content":HtmlContent,
+            "prev_title":title
+        })
+    
+def save(request):
+    if request.method == "POST":
+        title = request.POST['title']
+        content =request.POST['content']
+        util.save_entry(title,content)
+        return render(request, "encyclopedia/entry.html", {
+            "entry_title":title,
+            "entry_content":content
+        })
 
 
 
