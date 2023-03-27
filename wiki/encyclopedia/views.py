@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 import markdown2   # ignore
-import random
 from . import util
+import random
 
 
 def index(request):
@@ -76,9 +76,8 @@ def editEntry(request):
     if request.method== "POST":
         title =request.POST['title']
         content= util.get_entry(title)
-        HtmlContent =convert_markdown_to_Html(content)
         return render(request, "encyclopedia/Edit.html", {
-            "prev_content":HtmlContent,
+            "prev_content":content,
             "prev_title":title
         })
     
@@ -95,7 +94,7 @@ def save(request):
 
 
 
-def random(request):
+def random_entry(request):
     entries =util.list_entries()
     entry_title =random.choice(entries)
     entry_content =util.get_entry(entry_title)
