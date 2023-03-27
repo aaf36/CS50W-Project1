@@ -2,9 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 import markdown2   # ignore
-
-
-
+import random
 from . import util
 
 
@@ -95,5 +93,16 @@ def save(request):
         })
 
 
+
+
+def random(request):
+    entries =util.list_entries()
+    entry_title =random.choice(entries)
+    entry_content =util.get_entry(entry_title)
+    entry_content_html= convert_markdown_to_Html(entry_content)
+    return render(request, "encyclopedia/entry.html", {
+        "entry_title":entry_title,
+        "entry_content": entry_content_html
+    })
 
 

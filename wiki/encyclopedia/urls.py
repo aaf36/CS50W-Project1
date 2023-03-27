@@ -11,5 +11,6 @@ urlpatterns = [
     path("search/", views.search, name="search"),
     path("create/", views.newEntry_view, name="new"),
     path("edit/", views.editEntry, name="edit"),
-    path("save/", views.save, name="save")
+    path("save/", views.save, name="save"),
+    path("random/", views.random, name="random")
 ]
